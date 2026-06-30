@@ -1,4 +1,4 @@
-package com.vitalik.config;
+package com.vitalik.multiplicationtable.config;
 
 import java.util.Properties;
 
