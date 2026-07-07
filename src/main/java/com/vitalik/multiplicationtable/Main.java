@@ -28,7 +28,8 @@ public class Main {
             ConsolePrinter.print(expressions);
             LOGGER.info("Application finished successfully");
         } catch (RuntimeException e) {
-            LOGGER.error("Application failed", e);
+            LOGGER.error("Application failed: {}", e.getMessage());
+            System.exit(1);
         }
     }
 }

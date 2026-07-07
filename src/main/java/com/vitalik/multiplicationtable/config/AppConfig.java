@@ -15,10 +15,20 @@ public class AppConfig {
 
     private String getRequiredProperty(Properties properties, String key) {
         String value = properties.getProperty(key);
-        if (value == null || value.isBlank()) {
-            throw new IllegalArgumentException("Required property is missing: " + key);
+
+        if (value == null) {
+            throw new IllegalArgumentException(
+                    "Required property '" + key + "' is missing in application.properties"
+            );
         }
-        return value;
+
+        if (value.isBlank()) {
+            throw new IllegalArgumentException(
+                    "Required property '" + key + "' must not be blank"
+            );
+        }
+
+        return value.trim();
     }
 
     public String getMin() {

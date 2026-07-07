@@ -22,6 +22,11 @@ public class IntNumberStrategy implements NumberStrategy<Integer> {
     }
 
     @Override
+    public Integer zero() {
+        return 0;
+    }
+
+    @Override
     public String format(Integer value) {
         return String.valueOf(value);
     }

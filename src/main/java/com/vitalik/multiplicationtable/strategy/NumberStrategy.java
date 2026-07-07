@@ -9,5 +9,7 @@ public interface NumberStrategy<T> {
 
     int compare(T first, T second);
 
+    T zero();
+
     String format(T value);
 }

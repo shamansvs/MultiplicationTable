@@ -12,9 +12,11 @@ public class MultiplicationGenerator {
             AppConfig config,
             NumberStrategy<T> strategy
     ) {
-        T min = strategy.parse(config.getMin());
-        T max = strategy.parse(config.getMax());
-        T increment = strategy.parse(config.getIncrement());
+        T min = parseProperty("min", config.getMin(), strategy);
+        T max = parseProperty("max", config.getMax(), strategy);
+        T increment = parseProperty("increment", config.getIncrement(), strategy);
+
+        validateValues(min, max, increment, strategy);
 
         List<MultiplicationExpression> expressions = new ArrayList<>();
 
@@ -35,7 +37,36 @@ public class MultiplicationGenerator {
                 ));
             }
         }
-
         return expressions;
+    }
+
+    private <T> T parseProperty(
+            String propertyName,
+            String value,
+            NumberStrategy<T> strategy
+    ) {
+        try {
+            return strategy.parse(value);
+        } catch (RuntimeException e) {
+            throw new IllegalArgumentException(
+                    "Property '" + propertyName + "' has invalid value: '" + value + "'",
+                    e
+            );
+        }
+    }
+
+    private <T> void validateValues(
+            T min,
+            T max,
+            T increment,
+            NumberStrategy<T> strategy
+    ) {
+        if (strategy.compare(increment, strategy.zero()) <= 0) {
+            throw new IllegalArgumentException("Property 'increment' must be greater than zero");
+        }
+
+        if (strategy.compare(min, max) > 0) {
+            throw new IllegalArgumentException("Property 'min' must not be greater than property 'max'");
+        }
     }
 }
