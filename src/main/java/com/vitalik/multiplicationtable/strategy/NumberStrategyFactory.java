@@ -7,8 +7,10 @@ public final class NumberStrategyFactory {
     public static NumberStrategy<?> create(String type) {
         return switch (type) {
             case "int" -> new IntNumberStrategy();
+            case "double" -> new DoubleNumberStrategy();
             default -> throw new IllegalArgumentException(
-                    "Unsupported number type: '" + type + "'. Supported types: int");
+                    "Unsupported number type: '" + type + "'. Supported types: int, double"
+            );
         };
     }
 }
